@@ -1,7 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+    import('./core/components/auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: 'main',
+    loadChildren: () =>
+    import('./core/components/layout/layout.module').then((m) => m.LayoutModule),
+    children: [
+      {
+        path: 'communities',
+        loadChildren: () =>
+          import('./core/components/layout/pages/communities/communities.module').then((m) => m.CommunitiesModule)
+      },
+      {
+        path: 'events',
+        loadChildren: () =>
+          import('./core/components/layout/pages/events/events.module').then((m) => m.EventsModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./core/components/layout/pages/profile/profile.module').then((m) => m.ProfileModule)
+      },
+      {
+        path: '',
+        redirectTo: 'communities',
+        pathMatch: 'full'
+      }]
+  },
+  {
+    path: '**',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

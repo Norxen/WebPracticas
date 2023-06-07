@@ -1,0 +1,8 @@
+<h2>Login</h2>
+<form formGroup="loginForm" (ngSubmit)="login()">
+  <!-- Login form fields -->
+  <input type="text" formControlName="username" placeholder="Username">
+  <input type="password" formControlName="password" placeholder="Password">
+  <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  <p>Don't have an account? <button type="button" (click)="goToRegister()">Register</button></p>
+</form>
