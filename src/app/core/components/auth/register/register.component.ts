@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,18 +9,31 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  registerForm: any = {}; // Initialize an empty object to store form data
+  registerForm!: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private formBuilder: FormBuilder) { 
+
+  }
+
+  ngOnInit() {    
+    this.registerForm = this.formBuilder.group({
+      email: ['', Validators.required, Validators.email],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[A-Z]).{8,}$/)]],
+      confirmPassword: ['', Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[A-Z]).{8,}$/)]
+    });
+
+    this.registerForm.valueChanges.subscribe( () => {
+      console.log("Values changed");
+    });
+  }
 
   goToLogin() {
     this.router.navigateByUrl('/auth/login');
   }
 
-  register() {
-    // Handle the registration logic using the data from this.registerForm
-    console.log('Register form data:', this.registerForm);
-    // You can send the data to an authentication service or perform any other necessary actions
+  onRegisterFormSubmit() {
+    //TODO
+    console.log("boton submit hace cosas");
   }
 
 }

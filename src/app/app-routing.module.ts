@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './core/components/layout/layout/layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/auth/login',
-    pathMatch: 'full'
-  },
   {
     path: 'auth',
     loadChildren: () =>
@@ -14,8 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'main',
-    loadChildren: () =>
-    import('./core/components/layout/layout.module').then((m) => m.LayoutModule),
+    component: LayoutComponent,
     children: [
       {
         path: 'communities',
